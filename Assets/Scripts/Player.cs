@@ -17,9 +17,9 @@ namespace Golf
 		public float speed = 500f;
         private float power = 15f;
 
-        public float x = 41f;//ближе дальше
-        public float y = 38f;//вверх вниз
-        public float z = 3f;//влево вправо
+        public float x;//ближе дальше
+        public float y;//вверх вниз
+        public float z;//влево вправо
 
 		private bool m_isHitDown = false;
         private bool m_isRight = false;
@@ -32,9 +32,13 @@ namespace Golf
         private bool m_isPowerDown = false;
 
         private Vector3 m_lastPosition;
+        private float m_value = 1f;
         private void Awake()
         {
-            traektoryaTo.position = new Vector3(x, y, z);
+            var pos = traektoryaTo.position;
+            x = pos.x;
+            y = pos.y;
+            z = pos.z;
             powerText.text = $"power : {power}";
         }
 
@@ -56,7 +60,7 @@ namespace Golf
             m_isLeft = value;
             if (m_isLeft)
             {
-                z = z + 1;
+                z = z + m_value;
                 traektoryaTo.position = new Vector3(x,y,z);
             }
 
@@ -67,7 +71,7 @@ namespace Golf
             m_isRight = value;
             if (m_isRight)
             {
-                z = z - 1;
+                z = z - m_value;
                 traektoryaTo.position = new Vector3(x, y, z);
             }
         }
@@ -76,7 +80,7 @@ namespace Golf
             m_isUp = value;
             if (m_isUp)
             {
-                y = y + 1;
+                y = y + m_value;
                 traektoryaTo.position = new Vector3(x, y, z);
             }
         }
@@ -85,7 +89,7 @@ namespace Golf
             m_isDown = value;
             if (m_isDown)
             {
-                y = y - 1;
+                y = y - m_value;
                 traektoryaTo.position = new Vector3(x, y, z);
             }
         }
@@ -94,7 +98,7 @@ namespace Golf
             m_isPowerUp = value;
             if (m_isPowerUp)
             {
-                power = power + 1; 
+                power = power + m_value; 
                 powerText.text = $"power : {power}";                               
             }
         }
@@ -103,7 +107,7 @@ namespace Golf
             m_isPowerDown = value;
             if (m_isPowerDown)
             {
-                power = power - 1; 
+                power = power - m_value; 
                 powerText.text = $"power : {power}";                               
             }
         }
@@ -112,12 +116,12 @@ namespace Golf
         {
             if (collider.TryGetComponent(out Rigidbody body))
             {
-                //var traek = (traektoryaFrom.position + traektoryaTo.position).normalized;
-                var traek = (traektoryaTo.position).normalized;
+                var traek = (traektoryaTo.position - traektoryaFrom.position).normalized;
+                //var traek = (traektoryaTo.position).normalized;
                 body.AddForce(traek * power, ForceMode.Impulse);
                 //var dir = (helper.position - m_lastPosition).normalized;
                 //body.AddForce(dir * power, ForceMode.Impulse);
-
+                Debug.Log(traek);
                 if (collider.TryGetComponent(out Stone stone) && !stone.isAfect)
                 {
                     GameEvents.StickHit();

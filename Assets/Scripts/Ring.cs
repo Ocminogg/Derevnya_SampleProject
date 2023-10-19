@@ -5,13 +5,15 @@ using UnityEngine;
 namespace Golf
 {
     public class Ring : MonoBehaviour
-    {        
-        private void OnCollisionEnter(Collision collision)
+    {
+        private void OnTriggerEnter(Collider other)
         {
-            if (collision.transform.TryGetComponent(out Stone other))
+            if (other.transform.TryGetComponent(out Stone stone))
             {
                 GameEvents.CollisionRingInvoke();
+                Destroy(gameObject);
             }
         }
+        
     }
 }

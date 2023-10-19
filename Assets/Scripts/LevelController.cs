@@ -75,21 +75,13 @@ namespace Golf
         private void OnRingHit()
         {
             score++;
-            hightScore = Mathf.Max(hightScore, score);
-            //SpawnStone();
-            SpawnRing();
-			//inexRing++;
-   //         Destroy(m_rings[inexRing]);
-            //m_rings.Clear();
+            hightScore = Mathf.Max(hightScore, score);            
+            SpawnRing();			
             Debug.Log($"score: {score} - hightScore: {hightScore}");
         }
         private void OnStickHit()
-		{
-			//score++;
-			//hightScore = Mathf.Max(hightScore, score);
-			SpawnStone();
-			//SpawnRing();
-            //Debug.Log($"score: {score} - hightScore: {hightScore}");
+		{			
+			SpawnStone();			
 		}
 
 		public void SpawnStone()

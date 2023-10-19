@@ -22,16 +22,13 @@ namespace Golf
 			playerController.enabled = true;
 
 			GameEvents.onCollisionStones += OnGameOver;
-			GameEvents.onStickHit += OnStickHit;
+			GameEvents.onCollisionRing += OnStickHit;
 
 			//OnPowerChange();
 
             OnStickHit();
 		}
-		//private void OnPowerChange()
-		//{
-  //          powerText.text = $"power : {levelController.power}";
-  //      }
+		
 		private void OnStickHit()
 		{
 			scoreText.text = $"score : {levelController.score}";
