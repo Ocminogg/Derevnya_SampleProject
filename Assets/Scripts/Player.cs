@@ -47,8 +47,10 @@ namespace Golf
             m_lastPosition = helper.position;
 
             Quaternion rot = stick.localRotation;
-            Quaternion toRot = Quaternion.Euler(0, 0, m_isHitDown ? range : -range);
-			stick.localRotation = Quaternion.RotateTowards(rot, toRot, speed * Time.deltaTime);
+            //Quaternion toRot = Quaternion.Euler(0, 0, m_isHitDown ? range : -range);
+            Quaternion toRot = Quaternion.Euler(0, m_isHitDown ? range : -range,0);
+            //Quaternion toRot = Quaternion.Euler(0, 0, m_isHitDown ? range : -range);
+            stick.localRotation = Quaternion.RotateTowards(rot, toRot, speed * Time.deltaTime);
 		}
 
         public void SetHitDown(bool value)
@@ -63,8 +65,6 @@ namespace Golf
                 z = z + m_value;
                 traektoryaTo.position = new Vector3(x,y,z);
             }
-
-
         }
         public void SetRightDown(bool value)
         {
